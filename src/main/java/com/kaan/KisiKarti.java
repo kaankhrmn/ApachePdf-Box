@@ -9,8 +9,9 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import java.io.IOException;
 
 public class KisiKarti implements PdfGenerator {
+
     @Override
-    public void generatePdf(String ad_soyad, String tarih, String adres, String dogumYeri, String tckn, String cinsiyet) {
+    public void generateKisiKarti(String ad_soyad,String adres, String dogumYeri, String tckn, String cinsiyet) {
         String filename = "KisiKarti_" + ad_soyad + ".pdf";
         PDType1Font font = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
 
@@ -39,5 +40,10 @@ public class KisiKarti implements PdfGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void generateBasariBelgesi(String ad_soyad, String tarih) {
+
     }
 }

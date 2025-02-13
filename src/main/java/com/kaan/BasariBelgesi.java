@@ -11,7 +11,7 @@ import java.io.IOException;
 public class BasariBelgesi implements PdfGenerator {
 
     @Override
-    public void generatePdf(String ad_soyad, String tarih, String adres, String doğumYeri, String tckn, String cinsiyet) {
+    public void generateBasariBelgesi(String ad_soyad, String tarih) {
         String filename = "BasariBelgesi_" + ad_soyad + ".pdf";
         PDType1Font font = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
 
@@ -35,6 +35,10 @@ public class BasariBelgesi implements PdfGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void generateKisiKarti(String ad_soyad, String adres, String dogumYeri, String tckn, String cinsiyet) {
 
     }
 }

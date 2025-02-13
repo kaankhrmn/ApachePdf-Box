@@ -8,13 +8,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/pdf")
+@RequestMapping("/api/pdf/generate")
 public class PDFController {
-    @PostMapping("/generate")
-    public ResponseEntity<String> generatePdf(
+    @PostMapping("/BasariBelgesi")
+    public ResponseEntity<String> generatePdfBasariBelgesi(
             @RequestParam String type,
             @RequestParam String ad_soyad,
-            @RequestParam String tarih,
+            @RequestParam String tarih
+    )
+    {
+
+        try {
+            PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
+            generator.generateBasariBelgesi(ad_soyad,tarih);
+            return ResponseEntity.ok("PDF başarıyla oluşturuldu: " + type);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Hata oluştu: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/KisiKarti")
+    public ResponseEntity<String> generatePdfKisiKarti(
+            @RequestParam String type,
+            @RequestParam String ad_soyad,
             @RequestParam String adres,
             @RequestParam String dogumYeri,
             @RequestParam String cinsiyet,
@@ -23,7 +40,7 @@ public class PDFController {
 
         try {
             PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
-            generator.generatePdf(ad_soyad, tarih, adres, dogumYeri, tckn, cinsiyet);
+            generator.generateKisiKarti(ad_soyad, adres, dogumYeri, tckn, cinsiyet);
             return ResponseEntity.ok("PDF başarıyla oluşturuldu: " + type);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
