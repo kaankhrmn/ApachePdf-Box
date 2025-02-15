@@ -35,7 +35,7 @@ public class KisiKarti implements PdfGenerator {
             contentStream.endText();
             contentStream.close();
 
-            document.save(filename);
+//            document.save(filename);
             System.out.println(filename + " oluşturuldu.");
         } catch (IOException e) {
             e.printStackTrace();
