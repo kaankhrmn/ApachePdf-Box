@@ -1,8 +1,10 @@
 package com.kaan;
 
+import org.springframework.http.ResponseEntity;
+
 public interface PdfGenerator {
 
-    void generateKisiKarti(String ad_soyad,String adres, String dogumYeri, String tckn, String cinsiyet);
+    ResponseEntity<byte[]> generateKisiKarti(String ad_soyad,String adres, String dogumYeri, String tckn, String cinsiyet);
 
-    void generateBasariBelgesi(String ad_soyad, String tarih);
+    ResponseEntity<byte[]> generateBasariBelgesi(String ad_soyad, String tarih);
 }

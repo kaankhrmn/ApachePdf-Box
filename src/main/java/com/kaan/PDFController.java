@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/pdf/generate")
 public class PDFController {
     @PostMapping("/BasariBelgesi")
-    public ResponseEntity<String> generatePdfBasariBelgesi(
+    public ResponseEntity<byte[]> generatePdfBasariBelgesi(
             @RequestParam String type,
             @RequestParam String ad_soyad,
             @RequestParam String tarih
@@ -20,31 +20,28 @@ public class PDFController {
 
         try {
             PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
-            generator.generateBasariBelgesi(ad_soyad,tarih);
-            return ResponseEntity.ok("PDF başarıyla oluşturuldu: " + type);
+            return generator.generateBasariBelgesi(ad_soyad , tarih);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Hata oluştu: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping("/KisiKarti")
-    public ResponseEntity<String> generatePdfKisiKarti(
+    public ResponseEntity<byte[]> generatePdfKisiKarti(
             @RequestParam String type,
             @RequestParam String ad_soyad,
             @RequestParam String adres,
             @RequestParam String dogumYeri,
-            @RequestParam String cinsiyet,
-            @RequestParam String tckn
+            @RequestParam String tckn,
+            @RequestParam String cinsiyet
+
     ) {
 
         try {
             PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
-            generator.generateKisiKarti(ad_soyad, adres, dogumYeri, tckn, cinsiyet);
-            return ResponseEntity.ok("PDF başarıyla oluşturuldu: " + type);
+            return generator.generateKisiKarti(ad_soyad, adres, dogumYeri, tckn, cinsiyet);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Hata oluştu: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
