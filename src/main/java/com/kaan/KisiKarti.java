@@ -26,21 +26,34 @@ public class KisiKarti implements PdfGenerator {
             PDDocument document = PDDocument.load(inputStream);
             PDPage page = document.getPage(0);
 
-            PDPageContentStream contentStream = new PDPageContentStream(document, page , PDPageContentStream.AppendMode.APPEND, true);
+            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.setFont(PDType1Font.HELVETICA, 12);
 
             contentStream.beginText();
             contentStream.newLineAtOffset(300, 200);
             contentStream.showText(ad_soyad);
-            contentStream.newLineAtOffset(0, -50);
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.newLineAtOffset(300, 300);
             contentStream.showText(dogumYeri);
-            contentStream.newLineAtOffset(100, -50);
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.newLineAtOffset(300, 350);
             contentStream.showText(tckn);
-            contentStream.newLineAtOffset(100, -60);
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.newLineAtOffset(300, 400);
             contentStream.showText(cinsiyet);
-            contentStream.newLineAtOffset(100, -60);
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.newLineAtOffset(300, 450);
             contentStream.showText(adres);
             contentStream.endText();
+
             contentStream.close();
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -51,7 +64,7 @@ public class KisiKarti implements PdfGenerator {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "attachment; filename=output.pdf");
             headers.add("Content-Type", "application/pdf");
-
+            System.out.println("KisiKarti " + ad_soyad + " için oluşturuldu");
             return new ResponseEntity<>(byteArrayOutputStream.toByteArray(), headers, HttpStatus.OK);
 
         } catch (IOException e) {

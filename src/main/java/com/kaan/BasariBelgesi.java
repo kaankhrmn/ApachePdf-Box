@@ -28,13 +28,18 @@ public class BasariBelgesi implements PdfGenerator {
             PDPage page = document.getPage(0);
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.setFont(PDType1Font.HELVETICA, 40);
+
             contentStream.beginText();
-            contentStream.newLineAtOffset(10, -100);
+            contentStream.newLineAtOffset(400, 500);
             contentStream.showText(ad_soyad);
-            contentStream.newLineAtOffset(30, 100);
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.newLineAtOffset(400, 400);
             contentStream.showText(tarih);
             contentStream.endText();
+
             contentStream.close();
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -46,6 +51,7 @@ public class BasariBelgesi implements PdfGenerator {
             headers.add("Content-Disposition", "attachment; filename=output.pdf");
             headers.add("Content-Type", "application/pdf");
 
+            System.out.println("Basari Belgesi " + ad_soyad+ " için oluşturuldu.");
             return new ResponseEntity<>(byteArrayOutputStream.toByteArray(), headers, HttpStatus.OK);
 
         } catch (IOException e) {
