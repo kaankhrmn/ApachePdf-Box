@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 //import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,15 +29,16 @@ public class BasariBelgesi implements PdfGenerator {
             PDPage page = document.getPage(0);
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.setFont(PDType1Font.HELVETICA, 40);
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 40);
+            contentStream.setNonStrokingColor(Color.black);
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(400, 500);
+            contentStream.newLineAtOffset(370, 250);
             contentStream.showText(ad_soyad);
             contentStream.endText();
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(400, 400);
+            contentStream.newLineAtOffset(450, 450);
             contentStream.showText(tarih);
             contentStream.endText();
 

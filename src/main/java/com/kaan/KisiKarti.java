@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,30 +28,32 @@ public class KisiKarti implements PdfGenerator {
             PDPage page = document.getPage(0);
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 13);
+            contentStream.setNonStrokingColor(Color.black);
+
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(300, 200);
+            contentStream.newLineAtOffset(480, 355);
             contentStream.showText(ad_soyad);
             contentStream.endText();
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(300, 300);
+            contentStream.newLineAtOffset(480, 300);
             contentStream.showText(dogumYeri);
             contentStream.endText();
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(300, 350);
+            contentStream.newLineAtOffset(480, 240);
             contentStream.showText(tckn);
             contentStream.endText();
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(300, 400);
+            contentStream.newLineAtOffset(480, 185);
             contentStream.showText(cinsiyet);
             contentStream.endText();
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(300, 450);
+            contentStream.newLineAtOffset(480, 130);
             contentStream.showText(adres);
             contentStream.endText();
 
