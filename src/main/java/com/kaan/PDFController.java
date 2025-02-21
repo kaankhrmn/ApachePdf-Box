@@ -1,6 +1,5 @@
 package com.kaan;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,21 +9,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/pdf/generate")
 public class PDFController {
+
+    private final BasariBelgesi basariBelgesi;
+    private final KisiKarti kisiKarti;
+
+    public PDFController(BasariBelgesi basariBelgesi, KisiKarti kisiKarti) {
+        this.basariBelgesi = basariBelgesi;
+        this.kisiKarti = kisiKarti;
+    }
+
+
     @PostMapping("/BasariBelgesi")
     public ResponseEntity<byte[]> generatePdfBasariBelgesi(
             @RequestParam String type,
             @RequestParam String ad_soyad,
             @RequestParam String tarih
-    )
-    {
-
-        try {
-            PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
-            return generator.generateBasariBelgesi(ad_soyad , tarih);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    ) {
+        return basariBelgesi.generateDocument(type, ad_soyad, tarih);
     }
+
 
     @PostMapping("/KisiKarti")
     public ResponseEntity<byte[]> generatePdfKisiKarti(
@@ -36,12 +39,6 @@ public class PDFController {
             @RequestParam String cinsiyet
 
     ) {
-
-        try {
-            PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
-            return generator.generateKisiKarti(ad_soyad, adres, dogumYeri, tckn, cinsiyet);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        return kisiKarti.generateDocument(type, ad_soyad, adres, dogumYeri, tckn, cinsiyet);
     }
 }

@@ -18,6 +18,15 @@ import java.io.InputStream;
 @Service
 public class KisiKarti implements PdfGenerator {
 
+    public ResponseEntity<byte[]> generateDocument(String type, String ad_soyad, String adres , String dogumYeri ,String tckn , String cinsiyet) {
+        try{
+            PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
+            return generator.generateKisiKarti(ad_soyad, adres, dogumYeri, tckn, cinsiyet);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @Override
     public ResponseEntity<byte[]> generateKisiKarti(String ad_soyad, String adres, String dogumYeri, String tckn, String cinsiyet) {
 

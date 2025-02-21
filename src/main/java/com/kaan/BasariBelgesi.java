@@ -19,6 +19,15 @@ import java.io.InputStream;
 @Service
 public class BasariBelgesi implements PdfGenerator {
 
+    public ResponseEntity<byte[]> generateDocument(String type, String ad_soyad, String tarih) {
+        try {
+            PdfGenerator generator = PdfGeneratorFactory.getPdfGenerator(type);
+            return generator.generateBasariBelgesi(ad_soyad, tarih);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @Override
     public ResponseEntity<byte[]> generateBasariBelgesi(String ad_soyad, String tarih) {
 
